@@ -1,0 +1,13 @@
+system:
+  listener:
+    enable: false
+    port: 9802
+    thread: 1
+  workspace:
+    local: RD
+  worker:
+    count: 6
+    parallel: true
+  resource:
+    memory: 8GB
+    disk: 100GB
