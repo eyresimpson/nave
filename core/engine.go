@@ -32,8 +32,8 @@ func Engine() {
 	log.Info("Engine Load Exec...")
 	bluePrints := analysis.LoadExecFiles("auto")
 
-	// 加载插件（同步等待）
-	log.Info("Engine Load Plugins...")
+	// 加载插件（同步等待）这一步会加载Plugins下所有的插件，不考虑运行时插件加载（默认预先加载执行）
+	log.Info("Engine Skip Load Plugins...")
 
 	log.Info("Engine Start Flows...")
 	// 尝试根据执行计划执行（for）

@@ -24,6 +24,10 @@ func AssemblyLine(bluePrint basic.BluePrint, wg *sync.WaitGroup) {
 	localBluePrint = bluePrint
 	log.Info("Exec localBluePrint " + localBluePrint.Label + " start")
 
+	// 分析需要的插件，并尝试从Plugins中读取
+
+	// 如果Plugins中不能满足需求，尝试向公共版本库中索引下载
+
 	// 检测流水线是否开启了端口监听
 	if localBluePrint.FlowType == "service" && localBluePrint.Port != "" {
 

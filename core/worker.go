@@ -98,16 +98,6 @@ func RestfulConditionWorker(opt basic.Worker, w http.ResponseWriter, r *http.Req
 		// 循环执行列表
 		for _, item := range execList {
 			Run(item, opt, w, r)
-			// 循环子列表，以执行对应SID的Child
-			//for _, child := range opt.Children {
-			//	if child.Sid == item {
-			//		if child.Type == 0 {
-			//			RestfulWorker(child, w, r)
-			//		} else {
-			//			RestfulConditionWorker(child, w, r)
-			//		}
-			//	}
-			//}
 		}
 	}
 }
