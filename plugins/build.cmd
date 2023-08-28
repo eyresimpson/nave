@@ -1,0 +1,1 @@
+go build -o ./db.mod ./db/db.go

@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/gorilla/mux"
+	"nave/plugins"
 	"nave/tools/log"
 	"nave/types/basic"
 	"net/http"
@@ -27,6 +28,9 @@ func AssemblyLine(bluePrint basic.BluePrint, wg *sync.WaitGroup) {
 	// 分析需要的插件，并尝试从Plugins中读取
 
 	// 如果Plugins中不能满足需求，尝试向公共版本库中索引下载
+
+	// 尝试加载插件
+	plugins.Load()
 
 	// 检测流水线是否开启了端口监听
 	if localBluePrint.FlowType == "service" && localBluePrint.Port != "" {

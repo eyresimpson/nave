@@ -11,8 +11,7 @@ import (
 	"github.com/hashicorp/go-plugin"
 )
 
-func main() {
-	// Create an hclog.Logger
+func Load() {
 	logger := hclog.New(&hclog.LoggerOptions{
 		Name:   "plugin",
 		Output: os.Stdout,
@@ -23,7 +22,7 @@ func main() {
 	client := plugin.NewClient(&plugin.ClientConfig{
 		HandshakeConfig: handshakeConfig,
 		Plugins:         pluginMap,
-		Cmd:             exec.Command("./plugin/db/dbo"),
+		Cmd:             exec.Command("./plugins/db.mod"),
 		Logger:          logger,
 	})
 	defer client.Kill()
@@ -53,7 +52,7 @@ func main() {
 var handshakeConfig = plugin.HandshakeConfig{
 	ProtocolVersion:  1,
 	MagicCookieKey:   "BASIC_PLUGIN",
-	MagicCookieValue: "hello",
+	MagicCookieValue: "plugin_db",
 }
 
 // pluginMap is the map of plugins we can dispense.
