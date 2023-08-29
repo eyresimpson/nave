@@ -10,8 +10,8 @@ import (
 	"github.com/hashicorp/go-plugin"
 )
 
-// 加载插件
-func Load() {
+// Load 加载插件
+func Load(mod string) {
 	// 日志工具
 	logger := hclog.New(&hclog.LoggerOptions{
 		Name:   "plugin",
@@ -23,7 +23,7 @@ func Load() {
 	client := plugin.NewClient(&plugin.ClientConfig{
 		HandshakeConfig: handshakeConfig,
 		Plugins:         pluginMap,
-		Cmd:             exec.Command("./plugins/noah.nmod"),
+		Cmd:             exec.Command("plugins/noah.nmod"),
 		Logger:          logger,
 	})
 
@@ -43,7 +43,7 @@ func Load() {
 
 	// 具体功能实现
 	greeter := raw.(shared.Greeter)
-	log.Success("Noah plug-in is now installed" + greeter.Greet())
+	log.Success("Plug-in Noah install Success" + greeter.Greet())
 }
 
 // 用于握手的口令，必须对应才能链接成功

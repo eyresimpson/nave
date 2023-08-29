@@ -3,9 +3,7 @@ package core
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/gorilla/mux"
-	"nave/plugins"
 	"nave/tools/log"
 	"nave/types/basic"
 	"net/http"
@@ -26,11 +24,13 @@ func AssemblyLine(bluePrint basic.BluePrint, wg *sync.WaitGroup) {
 	log.Info("Exec localBluePrint " + localBluePrint.Label + " start")
 
 	// 分析需要的插件，并尝试从Plugins中读取
-
-	// 如果Plugins中不能满足需求，尝试向公共版本库中索引下载
-
-	// 尝试加载插件
-	plugins.Load()
+	for _, mod := range bluePrint.Mods {
+		// 如果Plugins中不能满足需求，尝试向公共版本库中索引下载
+		//os.DirFS()
+		// 尝试加载插件
+		//plugins.Load(mod)
+		println(mod)
+	}
 
 	// 检测流水线是否开启了端口监听
 	if localBluePrint.FlowType == "service" && localBluePrint.Port != "" {
@@ -51,7 +51,7 @@ func AssemblyLine(bluePrint basic.BluePrint, wg *sync.WaitGroup) {
 		go func() {
 			log.Success("AssemblyLine start listening for port " + localBluePrint.Port + " for " + localBluePrint.Label)
 			if err := server.ListenAndServe(); err != nil && !errors.Is(err, http.ErrServerClosed) {
-				fmt.Printf("Error starting HTTP server: %s\n", err)
+				log.Err("Cannot starting HTTP server", err)
 			}
 		}()
 
@@ -67,6 +67,8 @@ func AssemblyLine(bluePrint basic.BluePrint, wg *sync.WaitGroup) {
 		}
 	} else if localBluePrint.FlowType == "crontab" {
 		// 定时任务
+	} else {
+		log.Warn("This blueprint looks blank, Perhaps forgotten what to do?")
 	}
 	log.Success("Exec assemblyLine " + localBluePrint.Label + " complete")
 	// 声明协程处理完毕
