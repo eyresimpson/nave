@@ -1,8 +1,7 @@
 package plugins
 
 import (
-	"fmt"
-	shared "nave/plugins/db/shard"
+	shared "nave/plugins/noah/shared"
 	"nave/tools/log"
 	"os"
 	"os/exec"
@@ -11,51 +10,50 @@ import (
 	"github.com/hashicorp/go-plugin"
 )
 
+// 加载插件
 func Load() {
+	// 日志工具
 	logger := hclog.New(&hclog.LoggerOptions{
 		Name:   "plugin",
 		Output: os.Stdout,
 		Level:  hclog.Debug,
 	})
 
-	// We're a host! Start by launching the plugin process.
+	// RPC通信主机
 	client := plugin.NewClient(&plugin.ClientConfig{
 		HandshakeConfig: handshakeConfig,
 		Plugins:         pluginMap,
-		Cmd:             exec.Command("./plugins/db.mod"),
+		Cmd:             exec.Command("./plugins/noah.nmod"),
 		Logger:          logger,
 	})
+
 	defer client.Kill()
 
-	// Connect via RPC
+	// 通过RPC连接到插件
 	rpcClient, err := client.Client()
 	if err != nil {
 		log.Err("ERROR", err)
 	}
 
-	// Request the plugin
+	// 请求插件
 	raw, err := rpcClient.Dispense("greeter")
 	if err != nil {
-		log.Err("Error", err)
+		log.Err("Error Load Plugin", err)
 	}
 
-	// We should have a Greeter now! This feels like a normal interface
-	// implementation but is in fact over an RPC connection.
+	// 具体功能实现
 	greeter := raw.(shared.Greeter)
-	fmt.Println(greeter.Greet())
+	log.Success("Noah plug-in is now installed" + greeter.Greet())
 }
 
-// handshakeConfigs are used to just do a basic handshake between
-// a plugin and host. If the handshake fails, a user friendly error is shown.
-// This prevents users from executing bad plugins or executing a plugin
-// directory. It is a UX feature, not a security feature.
+// 用于握手的口令，必须对应才能链接成功
 var handshakeConfig = plugin.HandshakeConfig{
 	ProtocolVersion:  1,
 	MagicCookieKey:   "BASIC_PLUGIN",
-	MagicCookieValue: "plugin_db",
+	MagicCookieValue: "noahjones",
 }
 
-// pluginMap is the map of plugins we can dispense.
+// pluginMap 是我们可以分发的插件地图。
 var pluginMap = map[string]plugin.Plugin{
 	"greeter": &shared.GreeterPlugin{},
 }
