@@ -1,1 +1,0 @@
-go build -o ./db.nmod ./db/db.go

@@ -1,12 +1,13 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="go build nave" type="GoApplicationRunConfiguration" factoryName="Go Application" nameIsGenerated="true">
     <module name="nave" />
-    <working_directory value="$PROJECT_DIR$/" />
-    <go_parameters value="-o nave" />
+    <working_directory value="$PROJECT_DIR$/dist" />
+    <go_parameters value="-o ./dist/nave.exe" />
     <kind value="PACKAGE" />
     <package value="nave" />
     <directory value="$PROJECT_DIR$" />
     <filePath value="$PROJECT_DIR$/main.go" />
+    <output_directory value="$PROJECT_DIR$/dist" />
     <method v="2" />
   </configuration>
 </component>

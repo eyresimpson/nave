@@ -24,14 +24,6 @@ func AssemblyLine(bluePrint blueprint.BluePrint, wg *sync.WaitGroup) {
 	localBluePrint = bluePrint
 	log.Info("BluePrint convert to AssemblyLine " + localBluePrint.Label + " success")
 
-	// 分析需要的插件，并尝试从Plugins中读取
-	for _, mod := range localBluePrint.Mods {
-		// 如果Plugins中不能满足需求，尝试向公共版本库中索引下载
-		// TODO：尝试加载插件（优先保证Windows，首选GRPC方式）
-		//plugins.Load(mod)
-		println(mod)
-	}
-
 	// 实例化变量
 	for _, variable := range localBluePrint.Vars {
 		// 一定要注意默认值，默认不允许声明没有默认值的变量，如果蓝图中出现没有默认值的变量，按下述规则赋值

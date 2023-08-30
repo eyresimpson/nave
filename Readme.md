@@ -63,6 +63,26 @@ Nave可以解析Json文件，并根据规范，开启两种不同类型的业务
             - 条件循环
             - 次循环
 
+## 项目使用
+
+### Linux
+
+运行script下的build.sh即可
+
+会在dist目录下生成相关结构，插件的扩展名为 *.win
+
+### Windows
+
+运行script下的build.cmd即可
+
+会在dist目录下生成相关结构，插件的扩展名为 *.so
+
+### Macos
+
+运行script下的build.sh即可
+
+会在dist目录下生成相关结构，插件的扩展名为 *.mac
+
 ## 数据结构
 
 ### 流水线

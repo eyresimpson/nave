@@ -3,6 +3,7 @@ package core
 import (
 	"nave/analysis"
 	"nave/core/assemblyLine"
+	"nave/mods"
 	"nave/tools/log"
 	"sync"
 )
@@ -30,18 +31,18 @@ func Engine() {
 	//handle.Run()
 
 	// 加载可执行Exec文件/项目
-	log.Info("Engine Load Exec...")
+	log.Info("Engine Load Blueprint...")
 	bluePrints := analysis.LoadExecFiles("auto")
 
-	// 加载插件（同步等待）这一步会加载Plugins下所有的插件，不考虑运行时插件加载（默认预先加载执行）
-	log.Info("Engine Skip Load Plugins...")
+	// 分析需要的插件，并尝试从Plugins中读取
+	log.Info("Engine Load Mods...")
+	mods.Load("mod")
 
 	log.Info("Engine Start Flows...")
 	// 尝试根据执行计划执行（for）
 	for _, bluePrint := range bluePrints {
 		wg.Add(1)
 		// 通过协程执行
-		println("--- ", bluePrint.Label)
 		go assemblyLine.AssemblyLine(bluePrint, &wg)
 	}
 	wg.Wait()

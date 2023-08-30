@@ -1,7 +1,7 @@
 package worker
 
 import (
-	"nave/plugins"
+	"nave/mods"
 	"nave/types/blueprint"
 	"net/http"
 	"strings"
@@ -20,7 +20,7 @@ func RestfulWorker(opt blueprint.Worker, w http.ResponseWriter, r *http.Request)
 	opt.OptParams = convertParamsExp(opt)
 	// 调用具体实现
 	// 理论上，所有的功能都是插件功能，用户的所有可执行操作都由插件定义
-	plugins.Exec(opt.Name, opt.OptParams)
+	mods.Exec(opt.Name, opt.OptParams)
 }
 
 func convertParamsExp(opt blueprint.Worker) []string {
