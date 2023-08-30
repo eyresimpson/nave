@@ -1,7 +1,7 @@
-package basic
+package blueprint
 
 type Variable struct {
 	Name    string `json:"name"`
 	Type    string `json:"type"`
-	Default string `json:"default"`
+	Default any    `json:"default"`
 }

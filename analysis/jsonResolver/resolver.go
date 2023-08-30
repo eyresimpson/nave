@@ -4,14 +4,14 @@ import (
 	"encoding/json"
 	"io/ioutil"
 	"nave/tools/log"
-	"nave/types/basic"
+	"nave/types/blueprint"
 	"os"
 	"strings"
 )
 
 // Resolver 将Json文件解析为业务流
-func Resolver(filePath string) basic.BluePrint {
-	var flow basic.BluePrint
+func Resolver(filePath string) blueprint.BluePrint {
+	var flow blueprint.BluePrint
 	// 读取Json中的配置
 	jsonFile, err := os.Open(filePath)
 	if err != nil {

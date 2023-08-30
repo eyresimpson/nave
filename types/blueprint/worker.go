@@ -1,4 +1,4 @@
-package basic
+package blueprint
 
 type Worker struct {
 	// 执行器主键

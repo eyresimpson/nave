@@ -1,4 +1,4 @@
-package basic
+package blueprint
 
 type Request struct {
 	Engine string `json:"engine"`

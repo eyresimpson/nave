@@ -2,6 +2,7 @@ package core
 
 import (
 	"nave/analysis"
+	"nave/core/assemblyLine"
 	"nave/tools/log"
 	"sync"
 )
@@ -40,7 +41,8 @@ func Engine() {
 	for _, bluePrint := range bluePrints {
 		wg.Add(1)
 		// 通过协程执行
-		go AssemblyLine(bluePrint, &wg)
+		println("--- ", bluePrint.Label)
+		go assemblyLine.AssemblyLine(bluePrint, &wg)
 	}
 	wg.Wait()
 	log.Info("Engine Stopped")

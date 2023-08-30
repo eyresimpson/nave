@@ -3,20 +3,20 @@ package analysis
 import (
 	"nave/analysis/jsonResolver"
 	"nave/tools/log"
-	"nave/types/basic"
+	"nave/types/blueprint"
 	"os"
 	"path/filepath"
 	"strings"
 )
 
-// LoadProject 加载Nave Project (*.basic)
+// LoadProject 加载Nave Project (*.blueprint)
 func LoadProject() {
 
 }
 
 // LoadExecFiles 加载指定的Exec文件（Business业务流）
-func LoadExecFiles(pn string, arg ...string) []basic.BluePrint {
-	var bluePrints []basic.BluePrint
+func LoadExecFiles(pn string, arg ...string) []blueprint.BluePrint {
+	var bluePrints []blueprint.BluePrint
 	if pn == "auto" {
 		// 获取当前工作目录
 		currentDir, err := os.Getwd()
@@ -25,10 +25,10 @@ func LoadExecFiles(pn string, arg ...string) []basic.BluePrint {
 			return nil
 		}
 
-		// 构建 basic 目录的路径
+		// 构建 blueprint 目录的路径
 		execDir := filepath.Join(currentDir)
 
-		// 遍历 basic 目录下的所有 JSON 文件
+		// 遍历 blueprint 目录下的所有 JSON 文件
 		err = filepath.Walk(execDir, func(path string, info os.FileInfo, err error) error {
 			if err != nil {
 				log.Err("[ERROR] Cannot walking through directory:", err)

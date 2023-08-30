@@ -1,4 +1,4 @@
-package basic
+package blueprint
 
 // BluePrint 蓝图，其中包含了流水线的具体结构
 type BluePrint struct {
@@ -10,6 +10,6 @@ type BluePrint struct {
 	Path     string     `json:"path"`
 	Route    []Route    `json:"route"`
 	Mods     []string   `json:"mods"`
-	Var      []Variable `json:"var"`
+	Vars     []Variable `json:"vars"`
 	Steps    []Worker   `json:"steps"`
 }

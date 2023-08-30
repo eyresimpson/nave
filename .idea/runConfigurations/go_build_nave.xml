@@ -1,7 +1,7 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="go build nave" type="GoApplicationRunConfiguration" factoryName="Go Application" nameIsGenerated="true">
     <module name="nave" />
-    <working_directory value="$PROJECT_DIR$" />
+    <working_directory value="$PROJECT_DIR$/" />
     <go_parameters value="-o nave" />
     <kind value="PACKAGE" />
     <package value="nave" />

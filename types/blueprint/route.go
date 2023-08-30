@@ -1,4 +1,4 @@
-package basic
+package blueprint
 
 type Route struct {
 	Name      string   `json:"name"`
