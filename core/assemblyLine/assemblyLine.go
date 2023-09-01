@@ -9,7 +9,7 @@ import (
 )
 
 // 全局变量，全部流水线都可访问，后续做了并发处理后再具体使用
-var svars = variables.Variables{String: map[string]string{}, Int: map[string]int{}, Bool: map[string]bool{}}
+//var svars = variables.Variables{String: map[string]string{}, Int: map[string]int{}, Bool: map[string]bool{}}
 
 // AssemblyLine 流水线，简称流
 // 可以根据Flow文件，执行具体的流水线
@@ -50,13 +50,12 @@ func AssemblyLine(bluePrint blueprint.BluePrint, wg *sync.WaitGroup) {
 		}
 
 	}
-	println(vars.String["someone"])
 	// 检测流水线是否开启了端口监听
 	if localBluePrint.FlowType == "service" && localBluePrint.Port != "" {
-		flow.Serve(localBluePrint)
+		flow.Serve(localBluePrint, &vars)
 	} else if localBluePrint.FlowType == "crontab" {
 		// 定时任务
-		flow.Cron()
+		flow.Cron(localBluePrint, &vars)
 	} else {
 		log.Warn("This blueprint looks blank, Perhaps forgotten what to do?")
 	}

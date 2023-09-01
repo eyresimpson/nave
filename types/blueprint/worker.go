@@ -7,7 +7,10 @@ type Worker struct {
 	Next string `json:"next"`
 	// 执行路径，注意逻辑操作的这个值固定为空，被编译器忽略
 	Path string `json:"path"`
-	// 类型，0 代表一般操作，1 代表逻辑操作（改变流向的操作）
+	// 类型
+	// 0：逻辑操作，流重定向
+	// 1：Restful操作，通过原生rw返还数据到请求
+	// 2：无返回操作，常见于CRON流
 	Type int8 `json:"type"`
 	// 名称
 	Name string `json:"name"`

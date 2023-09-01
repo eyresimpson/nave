@@ -1,38 +1,34 @@
 package mods
 
 import (
+	"github.com/hashicorp/go-hclog"
 	shared "nave/mods/nave/shared"
 	"nave/tools/log"
 	"os"
 	"os/exec"
 
-	hclog "github.com/hashicorp/go-hclog"
 	"github.com/hashicorp/go-plugin"
 )
 
 // Load 加载插件
 func Load(mod string) {
+
 	// 日志工具
 	logger := hclog.New(&hclog.LoggerOptions{
 		Name:   "plugin",
 		Output: os.Stdout,
 		Level:  hclog.Warn,
 	})
+	// 创建客户端
+	client := makeClient(mod, logger)
 
-	// RPC通信主机
-	client := plugin.NewClient(&plugin.ClientConfig{
-		HandshakeConfig: handshakeConfig,
-		Plugins:         pluginMap,
-		Cmd:             exec.Command("./mods/nave.win"),
-		Logger:          logger,
-	})
-
+	// 销毁客户端
 	defer client.Kill()
 
 	// 通过RPC连接到插件
 	rpcClient, err := client.Client()
 	if err != nil {
-		log.Err("ERROR", err)
+		log.Err("Error link to mod client", err)
 	}
 
 	// 请求插件
@@ -79,4 +75,15 @@ func Exec(path string, params []string) {
 	default:
 		log.Warn("Cannot find plugins " + path)
 	}
+}
+
+func makeClient(name string, logger hclog.Logger) *plugin.Client {
+	// RPC通信主机
+	client := plugin.NewClient(&plugin.ClientConfig{
+		HandshakeConfig: handshakeConfig,
+		Plugins:         pluginMap,
+		Cmd:             exec.Command("./mods/" + name + ".mac"),
+		Logger:          logger,
+	})
+	return client
 }

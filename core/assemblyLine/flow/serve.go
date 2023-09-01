@@ -7,6 +7,7 @@ import (
 	"nave/core/worker"
 	"nave/tools/log"
 	"nave/types/blueprint"
+	"nave/types/variables"
 	"net/http"
 	"os"
 	"os/signal"
@@ -14,13 +15,13 @@ import (
 	"time"
 )
 
-func Serve(localBluePrint blueprint.BluePrint) {
+func Serve(localBluePrint blueprint.BluePrint, vars *variables.Variables) {
 	router := mux.NewRouter()
 	for _, route := range localBluePrint.Route {
 		router.HandleFunc("/"+localBluePrint.Path+"/"+route.Path, func(w http.ResponseWriter, r *http.Request) {
 			log.Info("AssemblyLine " + localBluePrint.Label + " request accepted")
 			// 开始执行操作器
-			worker.Run(r.URL.Path, localBluePrint.Steps, w, r)
+			worker.Run(r.URL.Path, localBluePrint.Steps, w, r, vars)
 			log.Success("AssemblyLine " + localBluePrint.Label + " request complete")
 		}).Methods(route.Type)
 	}

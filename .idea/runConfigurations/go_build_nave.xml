@@ -2,7 +2,7 @@
   <configuration default="false" name="go build nave" type="GoApplicationRunConfiguration" factoryName="Go Application" nameIsGenerated="true">
     <module name="nave" />
     <working_directory value="$PROJECT_DIR$/dist" />
-    <go_parameters value="-o ./dist/nave.exe" />
+    <go_parameters value="-o ./dist/nave" />
     <kind value="PACKAGE" />
     <package value="nave" />
     <directory value="$PROJECT_DIR$" />

@@ -20,25 +20,34 @@ import (
 	如果未检测到任何可执行exec文件，将退出运行
 */
 func Engine() {
-	log.Info("Engine Running...")
+	log.Info("Nave Engine Running...")
 	// 协程等待
 	var wg sync.WaitGroup
 	// 读取配置文件（同步）
-	log.Info("Engine Load Config...")
+	log.Info("Nave Engine Load Config...")
 
 	// 运行监听模块（如果需要）（异步）
-	log.Info("Engine Skip Listener...")
+	log.Info("Nave Engine Skip Listener...")
 	//handle.Run()
 
 	// 加载可执行Exec文件/项目
-	log.Info("Engine Load Blueprint...")
+	log.Info("Nave Engine Load Blueprint...")
 	bluePrints := analysis.LoadExecFiles("auto")
 
 	// 分析需要的插件，并尝试从Plugins中读取
-	log.Info("Engine Load Mods...")
-	mods.Load("mod")
+	log.Info("Nave Engine Load Mods...")
+	already := map[string]string{}
+	for _, bluePrint := range bluePrints {
+		for _, mod := range bluePrint.Mods {
+			_, isAlready := already[mod]
+			if !isAlready {
+				mods.Load(mod)
+				already[mod] = mod
+			}
+		}
+	}
 
-	log.Info("Engine Start Flows...")
+	log.Info("Nave Engine Start Flows...")
 	// 尝试根据执行计划执行（for）
 	for _, bluePrint := range bluePrints {
 		wg.Add(1)
@@ -46,5 +55,5 @@ func Engine() {
 		go assemblyLine.AssemblyLine(bluePrint, &wg)
 	}
 	wg.Wait()
-	log.Info("Engine Stopped")
+	log.Info("Nave Engine Stopped")
 }

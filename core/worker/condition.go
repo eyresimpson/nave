@@ -4,10 +4,11 @@ import (
 	"fmt"
 	"github.com/Knetic/govaluate"
 	"nave/types/blueprint"
+	"nave/types/variables"
 	"strings"
 )
 
-func ConditionWorker(opt blueprint.Worker) {
+func ConditionWorker(opt blueprint.Worker, vars *variables.Variables) {
 	// 执行判断表达式
 	for _, c := range opt.Condition {
 		// 执行列表
@@ -26,7 +27,7 @@ func ConditionWorker(opt blueprint.Worker) {
 		}
 		// 循环执行列表
 		for _, item := range execList {
-			Run(item, opt, xw, xr)
+			Run(item, opt, xw, xr, vars)
 		}
 	}
 }
